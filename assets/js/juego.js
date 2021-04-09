@@ -36,10 +36,26 @@ const pedirCarta = () => {
         throw 'No hay mas cartas en el deck';
     } else {
         let cartaElegida = deck.pop();
-        return `Este ha sido la carta elegida ${cartaElegida}`;
+        return cartaElegida;
     }
-
 }
 
+const valorCarta = (carta) => {
 
-console.log(pedirCarta());
+    const valor = carta.substring(0, carta.length - 1);
+
+    return( isNaN(valor)) ? 
+                (valor === 'A') ? 11 : 10
+                : valor * 1;
+    // let puntos = 0;
+    // if (isNaN(valor)) {
+    //     puntos = (valor === 'A') ? 11 : 10;
+    // } else {
+    //     puntos = valor * 1;
+    // }
+    // console.log('Estos son los puntos', puntos);
+}
+
+const valor = valorCarta(pedirCarta());
+
+console.log(valor)
