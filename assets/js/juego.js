@@ -14,8 +14,10 @@ let puntosOrdenador = 0;
 
 //referencias html
 const btnPedir = document.querySelector('#btnPedir');
+const btnDetener = document.querySelector('#btnDetener');
 const puntosHtml = document.querySelectorAll('small');
 const divCartasJugador = document.querySelector('#jugador-cartas');
+const divCartasOrdenador = document.querySelector('#ordenador-cartas');
 //Esta funcion crea una nueva baraja.
 let crearDeck = () => {
     for (let i = 2; i <= 10; i++) {
@@ -53,6 +55,31 @@ const valorCarta = (carta) => {
         : valor * 1;
 }
 
+//Turno del ordenador
+
+const turnoOrdenador = (puntosMinimos) => {
+
+    do {
+
+        const carta = pedirCarta();
+
+        puntosOrdenador = puntosOrdenador + valorCarta(carta);
+        puntosHtml[1].innerText = puntosOrdenador;
+
+        const imgCarta = document.createElement('img');
+        imgCarta.src = `assets/cartas/${carta}.png`;
+        imgCarta.classList.add('carta');
+        divCartasOrdenador.append(imgCarta);
+        if (puntosMinimos > 21) {
+            break;
+        }
+
+    } while ((puntosOrdenador < puntosMinimos) && (puntosMinimos <= 21));
+
+
+
+}
+
 
 //Eventos
 btnPedir.addEventListener('click', () => {
@@ -62,17 +89,29 @@ btnPedir.addEventListener('click', () => {
     puntosHtml[0].innerText = puntosJugador;
 
     const imgCarta = document.createElement('img');
-    imgCarta.src= `assets/cartas/${carta}.png`;
+    imgCarta.src = `assets/cartas/${carta}.png`;
     imgCarta.classList.add('carta');
     divCartasJugador.append(imgCarta);
 
-    if (puntosJugador > 21){
+    if (puntosJugador > 21) {
         console.log('Lo siento has perdido');
         btnPedir.disabled = true;
-    }else if (puntosJugador===21){
+        btnDetener.disabled = true;
+        turnoOrdenador(puntosJugador);
+    } else if (puntosJugador === 21) {
         console.log('Haz ganado, felicidades');
         btnPedir.disabled = true;
+        btnDetener.disabled = true;
+        turnoOrdenador(puntosJugador);
     }
+});
 
+btnDetener.addEventListener('click', ()=>{
+    btnPedir.disabled = true;
+    btnDetener.disabled = true;
+
+    turnoOrdenador(puntosJugador);
 
 });
+
+
