@@ -15,6 +15,7 @@ let puntosOrdenador = 0;
 //referencias html
 const btnPedir = document.querySelector('#btnPedir');
 const btnDetener = document.querySelector('#btnDetener');
+const btnNuevo = document.querySelector('#btnNuevo');
 const puntosHtml = document.querySelectorAll('small');
 const divCartasJugador = document.querySelector('#jugador-cartas');
 const divCartasOrdenador = document.querySelector('#ordenador-cartas');
@@ -76,6 +77,18 @@ const turnoOrdenador = (puntosMinimos) => {
 
     } while ((puntosOrdenador < puntosMinimos) && (puntosMinimos <= 21));
 
+    setTimeout(() => {
+        if (puntosOrdenador === puntosMinimos) {
+            alert('Nadie ha ganado!');
+        } else if (puntosMinimos > 21) {
+            alert('Has perdido, ordenador gana!')
+        } else if (puntosOrdenador > 21) {
+            alert('Usuario gana');
+        } else {
+            alert('Ordenador Gana');
+        }
+    }, 10)
+
 
 
 }
@@ -94,24 +107,42 @@ btnPedir.addEventListener('click', () => {
     divCartasJugador.append(imgCarta);
 
     if (puntosJugador > 21) {
-        console.log('Lo siento has perdido');
         btnPedir.disabled = true;
         btnDetener.disabled = true;
         turnoOrdenador(puntosJugador);
+
     } else if (puntosJugador === 21) {
-        console.log('Haz ganado, felicidades');
         btnPedir.disabled = true;
         btnDetener.disabled = true;
         turnoOrdenador(puntosJugador);
+
     }
 });
 
-btnDetener.addEventListener('click', ()=>{
+btnDetener.addEventListener('click', () => {
     btnPedir.disabled = true;
     btnDetener.disabled = true;
 
     turnoOrdenador(puntosJugador);
 
 });
+
+btnNuevo.addEventListener('click', () => {
+    console.clear();
+    deck = [];
+    deck = crearDeck();
+    puntosJugador = 0;
+    puntosOrdenador = 0;
+
+    puntosHtml[0].innerText = 0;
+    puntosHtml[1].innerText = 0;
+    divCartasOrdenador.innerHTML = '';
+    divCartasJugador.innerHTML = '';
+    btnPedir.disabled = false;
+    btnDetener.disabled = false;
+
+
+});
+
 
 
