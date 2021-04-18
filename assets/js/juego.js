@@ -90,8 +90,6 @@
 
 
     }
-
-
     //Eventos
     btnPedir.addEventListener('click', () => {
         const carta = pedirCarta();
