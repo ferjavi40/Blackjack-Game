@@ -1,23 +1,17 @@
-
-
 (() => {
     'use strict'
-
     let deck = [];
     const tipos = ['C', 'D', 'H', 'S'];
     const especiales = ['A', 'J', 'Q', 'K'];
-
     let puntosJugador = 0;
     let puntosOrdenador = 0;
-
-    //referencias html
     const btnPedir = document.querySelector('#btnPedir');
     const btnDetener = document.querySelector('#btnDetener');
     const btnNuevo = document.querySelector('#btnNuevo');
     const puntosHtml = document.querySelectorAll('small');
     const divCartasJugador = document.querySelector('#jugador-cartas');
     const divCartasOrdenador = document.querySelector('#ordenador-cartas');
-    //Esta funcion crea una nueva baraja.
+
     let crearDeck = () => {
         for (let i = 2; i <= 10; i++) {
             for (let tipo of tipos) {
@@ -36,7 +30,6 @@
     }
     crearDeck();
 
-    //Esta funcion me permite tomar una carta.
     const pedirCarta = () => {
         if (deck.length === 0) {
             throw 'No hay mas cartas en el deck';
@@ -54,17 +47,12 @@
             : valor * 1;
     }
 
-    //Turno del ordenador
-
     const turnoOrdenador = (puntosMinimos) => {
 
         do {
-
             const carta = pedirCarta();
-
             puntosOrdenador = puntosOrdenador + valorCarta(carta);
             puntosHtml[1].innerText = puntosOrdenador;
-
             const imgCarta = document.createElement('img');
             imgCarta.src = `assets/cartas/${carta}.png`;
             imgCarta.classList.add('carta');
@@ -93,10 +81,8 @@
     //Eventos
     btnPedir.addEventListener('click', () => {
         const carta = pedirCarta();
-
         puntosJugador = puntosJugador + valorCarta(carta);
         puntosHtml[0].innerText = puntosJugador;
-
         const imgCarta = document.createElement('img');
         imgCarta.src = `assets/cartas/${carta}.png`;
         imgCarta.classList.add('carta');
@@ -118,9 +104,7 @@
     btnDetener.addEventListener('click', () => {
         btnPedir.disabled = true;
         btnDetener.disabled = true;
-
         turnoOrdenador(puntosJugador);
-
     });
 
     btnNuevo.addEventListener('click', () => {
@@ -129,15 +113,12 @@
         deck = crearDeck();
         puntosJugador = 0;
         puntosOrdenador = 0;
-
         puntosHtml[0].innerText = 0;
         puntosHtml[1].innerText = 0;
         divCartasOrdenador.innerHTML = '';
         divCartasJugador.innerHTML = '';
         btnPedir.disabled = false;
         btnDetener.disabled = false;
-
-
     });
 
 })();
